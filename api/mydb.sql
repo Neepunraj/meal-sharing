@@ -1,1 +1,1 @@
-select * from meal
+select * from meal where id=1

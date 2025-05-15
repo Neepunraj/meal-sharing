@@ -1,6 +1,6 @@
 import knex from "knex";
 
-const dbClient = knex({
+const connection = knex({
   client: process.env.DB_CLIENT,
   connection: {
     host: process.env.DB_HOST,
@@ -13,9 +13,4 @@ const dbClient = knex({
   },
 });
 
-
-export const getFutureMealsTry = async (req, res) => {
-  const responseFromDb = await dbClient.raw("select * from meal")
-  return responseFromDb[0]
-}
-
+export default connection;
