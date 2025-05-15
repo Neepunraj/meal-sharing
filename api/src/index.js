@@ -43,6 +43,13 @@ const getPastMeals = async (req, res) => {
   where \`when\`> now();
   `;
   const meals = await knex.raw(query);
+  if (!meals[0].length) {
+    res.status(404).json({
+      message: "No Data Found"
+    })
+    return
+  }
+
   res.json({
     message: "Past meals when datetime",
     data: meals[0]
@@ -53,23 +60,48 @@ const getAllMeals = async (req, res) => {
   select * from meal ;
   `;
   const meals = await knex.raw(query);
+  if (!meals[0].length) {
+    res.status(404).json({
+      message: "No Data Found"
+    })
+    return
+  }
+
   res.json({
     message: "Past meals when datetime",
     data: meals[0]
   })
 }
 const getFirstMealbyID = async (req, res) => {
-  const query = `
-  select * from meal  limit 1 ;
+  const { id } = req.query
+  if (!id) {
+    res.status(404).json({
+      error: "id Required"
+    })
+  } else {
+    const query = `
+  select * from meal where id=${id} ;
   `;
-  /* asumming id is number starting from 1  */
+    /* asumming id is number starting from 1  */
 
-  const meals = await knex.raw(query);
+    const meals = await knex.raw(query);
 
-  res.json({
-    message: 'first meal with id',
-    data: meals[0]
-  })
+    if (!meals[0].length) {
+      res.status(404).json({
+        status: 404,
+        error: 'Item with id is not Found'
+      })
+      return
+    }
+
+
+    res.json({
+      message: 'first meal with id',
+      data: meals[0]
+    })
+
+  }
+
 }
 const getLastMealByID = async (req, res) => {
   const { id } = req.query
@@ -79,8 +111,14 @@ const getLastMealByID = async (req, res) => {
   select * from meal order by id desc limit 1 ;
   `;
   const meals = await knex.raw(query);
+  if (!meals[0].length) {
+    res.status(404).json({
+      message: "No Data Found"
+    })
+    return
+  }
 
-  res.send({
+  res.status(200).json({
     message: "Gettign Last Meal",
     data: meals[0]
   })
