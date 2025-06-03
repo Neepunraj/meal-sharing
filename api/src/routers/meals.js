@@ -1,7 +1,8 @@
 import express from 'express'
-import { addMeals, deletMealById, getMeals, getMealsbyId, updateMeals } from '../controllers/mealController.js'
+import { addMeals, deletMealById, getMeals, getMealsbyId, getMEalsByQuery, updateMeals } from '../controllers/mealController.js'
 
 export const mealRouter = express.Router()
+mealRouter.get('/api/meal', getMEalsByQuery)
 mealRouter.get('/api/meals', getMeals)
 mealRouter.get('/api/meals/:id', getMealsbyId)
 mealRouter.post('/api/meals', addMeals)
