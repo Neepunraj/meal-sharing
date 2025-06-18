@@ -31,7 +31,7 @@ export async function addMeals(req, res) {
 
         if (existingData && existingData.length > 0) {
             res.status(401).json({
-                sucess: false,
+                success: false,
                 error: 'Meal already exists Please avoid dublication'
             })
             return
