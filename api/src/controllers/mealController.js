@@ -20,7 +20,65 @@ export async function getMeals(req, res) {
     }
 
 }
+export async function getMEalsByQuery(req, res) {
+    try {
+        const { maxPrice,
+            availableReservations,
+            title,
+            dateAfter,
+            dateBefore,
+            limit,
+            sortKey,
+            sortDir, } = req.query
+        let query = knex('meal').select('*')
 
+        /* filetering Methods */
+        if (maxPrice) {
+            query.where('price', '<=', Number(maxPrice))
+        }
+        if (title) {
+            query.where('title', 'like', `%${title}%`)
+
+        }
+        if (dateAfter) {
+            query.where('when', '>', dateAfter)
+
+        }
+        if (dateBefore) {
+            query.where('when', '>', dateBefore)
+
+        }
+        if (availableReservations === 'true') {
+            query.whereRaw(
+                'max_reservations > (SELECT COUNT(*) FROM reservation WHERE reservation.meal_id = meal.id)'
+            );
+        } else if (availableReservations === 'false') {
+            query.whereRaw(
+                `(
+       SELECT COUNT(*)
+       FROM reservation
+       WHERE reservation.meal_id = meal.id
+     ) >= meal.max_reservations`
+            );
+        }
+        const validSortKeys = ['price', 'when', 'max_reservations'];
+        if (sortKey && validSortKeys.includes(sortKey)) {
+            const direction = sortDir === 'desc' ? 'desc' : 'asc';
+            query.orderBy(sortKey, direction);
+        }
+        if (limit) {
+            query.limit(Number(limit));
+        }
+
+        const meals = await query;
+        if (meals.length === 0) {
+            return res.status(200).json({ message: 'No meals found', data: [] });
+        }
+        res.json(meals);
+    } catch (error) {
+        res.status(500).json({ error: "Internal Server Error" })
+    }
+}
 export async function addMeals(req, res) {
 
     try {
