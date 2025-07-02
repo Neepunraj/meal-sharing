@@ -1,10 +1,12 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useReducer, useState } from 'react'
 import styles from "./MealList.module.css"
+import { useRouter } from 'next/navigation'
 export default function MealList() {
     const [meals, setMeals] = useState([])
     const [error, setError] = useState(null)
     const [isLoading, setIsloading] = useState(false)
+    const router = useRouter()
     const fetchMeals = async () => {
         setIsloading(true)
         try {
@@ -38,14 +40,14 @@ export default function MealList() {
         <p className={styles.redZone}>Error occured {error}</p>
     </div>
     return (
-        <div className={styles.fullWidthContainer}>
+        <div className={styles.fullWidthContainer} >
             <h1>Meal List</h1>
             <div className={styles.mealLists}>
                 {
                     meals && meals.length > 0 ?
 
                         meals.map(meal =>
-                            <div className={styles.mealCard} key={meal.id}>
+                            <div className={styles.mealCard} key={meal.id} onClick={() => router.push(`/meal/${meal.id}`)}>
                                 <h3>{meal.title?.toUpperCase()}</h3>
                                 <p>{meal.description}</p>
                                 <p>Price: ${meal.price}</p>
