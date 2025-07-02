@@ -2,9 +2,9 @@ import dotenv from 'dotenv'
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import knex from './database_client.js';
 import { mealRouter } from './routers/meals.js';
 import { reservationsRouter } from './routers/reservations.js';
+import { reviewRouter } from './routers/reviews.js';
 
 dotenv.config()
 const app = express();
@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 
 app.use(mealRouter)
 app.use(reservationsRouter)
+app.use(reviewRouter)
 /* response with hello */
 app.get('/', (req, res) => {
   res.send('Hello Again')
