@@ -5,6 +5,6 @@ import { addReservations, deleteReservationByID, getallReservation, getReservati
 export const reservationsRouter = express.Router()
 reservationsRouter.get('/api/reservations', getallReservation)
 reservationsRouter.get('/api/reservations/:id', getReservationById)
-reservationsRouter.post('/api/reservations', addReservations)
+reservationsRouter.post('/api/addreservations', addReservations)
 reservationsRouter.put('/api/reservations/:id', updateReservation)
 reservationsRouter.delete('/api/reservations/:id', deleteReservationByID)

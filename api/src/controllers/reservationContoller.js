@@ -28,18 +28,39 @@ export async function addReservations(req, res) {
             contact_number,
             contact_name,
             contact_email,
-            createdAt,
             meal_id } = req.body
 
 
+        const meal = await knex('meal').where({ id: meal_id }).first()
+        if (!meal) {
+            res.status(404).json({ success: false, error: 'meal Not found' })
+            return
+        }
+        const maxReservation = meal.max_reservations
+        /* checking revervation */
+        const result = await knex('reservations').where({ id: meal_id }).sum('no_of_guests as total_reserved').first()
+        const totalReserved = result.total_reserved || 0
+        /* check if you can add reservation */
+
+        if (totalReserved + no_of_guests > maxReservation) {
+            res.status(400).json({
+                success: false,
+                error: 'Not Enough Spot Availbale'
+            })
+            return
+        }
 
         await knex('reservations').insert({
             no_of_guests,
             contact_number,
             contact_name,
             contact_email,
-            createdAt,
+            createdAt: knex.fn.now(),
             meal_id
+        })
+        /* also need to decreace reservation spot in meals */
+        await knex('meal').where({ id: meal_id }).update({
+            max_reservations: maxReservation - no_of_guests
         })
         res.status(200).json({
             success: true,
@@ -85,7 +106,7 @@ export async function updateReservation(req, res) {
             contact_number,
             contact_name,
             contact_email,
-            createdAt, meal_id } = req.body
+            meal_id } = req.body
         const existingData = await knex('reservations').where('id', id).first()
 
         if (!existingData) {
@@ -100,7 +121,7 @@ export async function updateReservation(req, res) {
             contact_number,
             contact_name,
             contact_email,
-            createdAt,
+            createdAt: knex.fn.now(),
             meal_id
         })
         res.status(200).json({
