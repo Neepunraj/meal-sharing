@@ -1,0 +1,23 @@
+.layoutWrapper {
+  min-height: 100vh;
+  background-color: var(--background, #f9fafb); /* fallback color */
+  display: flex;
+  width: 80vw;
+}
+.main {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+}
+.mainContent {
+  min-height: 100vh;
+  transition: margin-left 0.3s ease;
+}
+
+.openSidebar {
+  margin-left: 1rem;
+}
+
+.closedSidebar {
+  margin-left: 1rem;
+}

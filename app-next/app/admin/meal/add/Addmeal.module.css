@@ -1,0 +1,71 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  align-items: center;
+  margin: 0 auto;
+  height: 100vh;
+  width: 80vw;
+  background-color: hsl(0, 0%, 91%);
+}
+
+.uploadArea {
+  display: flex;
+  flex-direction: column;
+  width: 80vw;
+  align-items: center;
+  justify-content: center;
+  border: 1px dotted black;
+  border-radius: 10px;
+}
+.uploadContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  gap: 10px;
+}
+.previewContainer {
+  display: flex;
+  gap: 10px;
+}
+.previewImageWrapper {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+  object-fit: cover;
+}
+.fields {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  margin: 10px auto;
+  border-radius: 10px;
+  border: 1px dotted black;
+  width: 80vw;
+}
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  padding: 5px;
+  width: 100%;
+  border-radius: 10px;
+  gap: 10px;
+  margin-right: 5px;
+}
+.formGroup input,
+.formGroup textarea {
+  width: 100%;
+  padding: 5px;
+  background-color: hsl(0, 0%, 91%);
+}
+.submitBtn {
+  background-color: rgb(98, 98, 149);
+  color: white;
+  width: 100%;
+  padding: 5px;
+  font-size: larger;
+  border-radius: 10px;
+}

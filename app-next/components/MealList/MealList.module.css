@@ -20,7 +20,7 @@
   justify-content: center;
 }
 .mealCard {
-  background-color: antiquewhite;
+  background-color: white;
   border: 1px solid #ddd;
   padding: 1rem;
   border-radius: 8px;
@@ -29,4 +29,74 @@
   flex-direction: column;
   align-items: center;
   cursor: pointer;
+}
+
+.button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+.button:hover {
+  background-color: #1b3670;
+}
+.mealContainer {
+  max-width: 700px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+.reviewContainer {
+  max-width: 200px;
+  margin-top: 10px;
+  padding: 1.5rem;
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+.mealTitle {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #1f2937;
+}
+.mealDescription {
+  color: #4b5563;
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.mealDetailsGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  font-size: 0.9rem;
+  color: #374151;
+}
+
+.label {
+  font-weight: 500;
+}
+.form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+.imgwrapper {
+  width: 100%;
+  overflow: hidden;
+}
+.images {
+  width: 100%;
+  object-fit: cover;
 }

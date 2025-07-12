@@ -1,0 +1,84 @@
+.relativeSection {
+  position: relative;
+  height: 600px;
+  overflow: hidden;
+}
+.imgDisplay {
+  position: absolute;
+  transition: all;
+  opacity: 0;
+  width: 100%;
+}
+.activeImg {
+  opacity: 1;
+}
+.inactiveImg {
+  opacity: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+.absolutediv {
+  position: absolute;
+  inset: 0;
+}
+.imageBanner {
+  height: 600px;
+  width: 100%;
+  object-fit: cover;
+  border: 1px solid black;
+}
+.blackOpacity {
+  position: absolute;
+  background-color: black;
+  inset: 0;
+  opacity: 0.3;
+}
+.titleContainer {
+  position: relative;
+  height: 600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+}
+.textBox {
+  color: white;
+  padding: 5px;
+  font-size: 20px;
+}
+.largerText {
+  font-size: 50px;
+}
+.bookButton {
+  color: white;
+  background-color: black;
+  padding: 5px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.bookButton:hover {
+  background-color: #949090;
+}
+.dotButton {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transition: background-color 0.3s ease-in-out;
+  border: none;
+  cursor: pointer;
+}
+.activeButton {
+  background-color: white;
+  width: 15px;
+}
+
+.inactiveButton {
+  background-color: rgb(206, 202, 202);
+}
+.buttons {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 1px;
+}
