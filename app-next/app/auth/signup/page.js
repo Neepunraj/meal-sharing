@@ -5,6 +5,7 @@ import styles from './page.module.css'
 import Link from 'next/link'
 import { useUserContext } from '@/context/usercontext'
 import { useRouter } from 'next/navigation'
+import Button from '@/components/ui/Button/Button'
 const initalformData = {
     email: '',
     password: '',
@@ -56,8 +57,7 @@ export default function SingUpPage() {
                                 value={formdata.password} name='password' placeholder='Please Entnter password' onChange={handleChange} />
                         </div>
 
-
-                        <button type='submit' className={styles.loginButton}>{isLoading ? "Registering .... " : "Register"}</button>
+                        <Button type='submit' name={isLoading ? "Registering .... " : "Register"} variant={'Primary'} fullWidth />
 
                     </form>
                     <p>Already have a account {" "}

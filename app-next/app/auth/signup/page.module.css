@@ -21,11 +21,3 @@
   display: flex;
   gap: 10px;
 }
-.loginButton {
-  width: 50%;
-  padding: 5px;
-  border-radius: 5px;
-}
-:hover .loginButton {
-  cursor: pointer;
-}

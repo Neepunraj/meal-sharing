@@ -5,6 +5,7 @@ import styles from './page.module.css'
 import Link from 'next/link'
 import { useUserContext } from '@/context/usercontext'
 import { useRouter } from 'next/navigation'
+import Button from '@/components/ui/Button/Button'
 const initalformData = {
     email: '',
     password: ''
@@ -52,7 +53,7 @@ export default function LoginPage() {
                                 required
                                 value={formdata.password} name='password' placeholder='Please Entnter password' onChange={handleChange} />
                         </div>
-                        <button type='submit' className={styles.loginButton}>{isLoading ? "Logging" : "Login"}</button>
+                        <Button type='submit' variant={'Primary'} name={isLoading ? "Logging" : "Login"} fullWidth />
                         <p>Don't have a account {" "}
                             <Link href={'/auth/signup'}>Sign Up</Link>
                         </p>
