@@ -15,7 +15,7 @@ export async function getallReservation(req, res) {
     } else {
         res.status(200).json({
             success: 'true',
-            reservation: reservations
+            reservations: reservations
         })
     }
 

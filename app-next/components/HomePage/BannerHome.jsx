@@ -1,0 +1,58 @@
+"use client"
+import { useMealContext } from '@/context/mealContext'
+import React, { useEffect, useState } from 'react'
+
+import styles from "./BannerHome.module.css";
+
+export default function BannerHome() {
+    const [currentSlide, setCurrentSlide] = useState(0)
+
+    const { meals, fetchMealsAdmin, bannerImages } = useMealContext()
+    useEffect(() => {
+        fetchMealsAdmin()
+    }, [])
+    useEffect(() => {
+        if (bannerImages.length > 0) {
+            const bannerTimer = setInterval(() => {
+                setCurrentSlide(prev => (prev + 1) % bannerImages.length)
+
+            }, 4000)
+            return () => clearInterval(bannerTimer)
+        }
+
+    }, [bannerImages.length])
+    return (
+        <div>
+            <section className={styles.relativeSection}>
+                {
+                    bannerImages && bannerImages.length > 0 && bannerImages.map((banner, index) =>
+                        <div key={index} className={`${styles.imgDisplay} ${currentSlide === index ? styles.activeImg : styles.inactiveImg}`}>
+                            <div className={styles.absolutediv}>
+                                <img src={banner} alt={`Banner ${index + 1}`} className={styles.imageBanner} />
+                            </div>
+                            <div className={styles.blackOpacity} />
+                            <div className={styles.titleContainer}>
+                                <div className={styles.textBox}>
+                                    <span>
+                                        Book Online Nw
+                                    </span>
+                                    <h1 className={styles.largerText}>Your Hygge Resturant</h1>
+                                    <p>A Cozy Hub Station</p>
+                                    <button className={styles.bookButton}>Reserve Now</button>
+                                </div>
+                            </div>
+
+                        </div>)
+                }
+                <div className={styles.buttons}>
+                    {
+                        bannerImages && bannerImages.length > 0 && bannerImages.map((_, index) =>
+                            <button key={index} className={`${styles.dotButton} ${currentSlide === index ? styles.activeButton : styles.inactiveButton}`} />
+                        )
+                    }
+                </div>
+            </section>
+
+        </div>
+    )
+}

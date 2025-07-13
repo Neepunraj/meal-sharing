@@ -1,10 +1,11 @@
 import express from 'express'
 import { addMeals, deletMealById, getMeals, getMealsbyId, getMEalsByQuery, updateMeals } from '../controllers/mealController.js'
+import { upload } from '../middleware/uploadMiddleWare.js'
 
 export const mealRouter = express.Router()
-mealRouter.get('/api/meal', getMEalsByQuery)
-mealRouter.get('/api/meals', getMeals)
-mealRouter.get('/api/meals/:id', getMealsbyId)
-mealRouter.post('/api/meals', addMeals)
-mealRouter.put('/api/meals/:id', updateMeals)
-mealRouter.delete('/api/meals/:id', deletMealById)
+mealRouter.get('/getmeals', getMEalsByQuery)
+mealRouter.get('/allmeals', getMeals)
+mealRouter.get('/:id', getMealsbyId)
+mealRouter.post('/addmeal', upload.array("images", 5), addMeals)
+mealRouter.put('/:id', updateMeals)
+mealRouter.delete('/:id', deletMealById)

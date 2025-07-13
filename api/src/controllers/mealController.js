@@ -1,4 +1,5 @@
 
+import cloudinary from '../config/cloudinary.js'
 import knex from '../database_client.js'
 
 
@@ -86,7 +87,10 @@ export async function addMeals(req, res) {
             location, when, max_reservations, price,
             createdAt } = req.body
         const existingData = await knex('meal').where('title', title)
-
+        const files = req.files
+        const uploadPromises = files.map(file => cloudinary.uploader.upload(file.path, { folder: 'mealphoto' }))
+        const uploadResults = await Promise.all(uploadPromises)
+        const imgSrcs = uploadResults.map(result => result.secure_url)
         if (existingData && existingData.length > 0) {
             res.status(401).json({
                 success: false,
@@ -97,7 +101,7 @@ export async function addMeals(req, res) {
         await knex('meal').insert({
             title, description,
             location, when, max_reservations, price,
-            createdAt
+            createdAt, imgUrl: imgSrcs
         })
         res.status(200).json({
             success: true,
@@ -112,9 +116,8 @@ export async function addMeals(req, res) {
 }
 export async function getMealsbyId(req, res) {
     const id = req.params.id
-
-    const meals = await knex('meal').where('id', id).first()
-    if (!meals) {
+    const meal = await knex('meal').where('id', id).first()
+    if (!meal) {
         res.status(404).json({
             success: false,
             error: 'Meals not Found'
@@ -123,7 +126,7 @@ export async function getMealsbyId(req, res) {
     } else {
         res.status(200).json({
             success: 'true',
-            meals: meals
+            meal: meal
         })
     }
 
@@ -132,7 +135,6 @@ export async function updateMeals(req, res) {
 
     try {
         const id = req.params.id
-
 
         if (!id) {
             res.status(401).json({
@@ -143,9 +145,9 @@ export async function updateMeals(req, res) {
         }
         const { title, description,
             location, when, max_reservations, price,
-            createdAt } = req.body
+        } = req.body
         const existingData = await knex('meal').where('id', id).first()
-
+        const formatedDate = new Date(when)
         if (!existingData) {
             res.status(401).json({
                 sucess: false,
@@ -153,14 +155,15 @@ export async function updateMeals(req, res) {
             })
             return
         }
-        await knex('meal').where("id", id).update({
+        const data = await knex('meal').where("id", id).update({
             title, description,
-            location, when, max_reservations, price,
-            createdAt
+            location, when: formatedDate, max_reservations, price,
+
         })
         res.status(200).json({
             success: true,
             message: 'meal updated successfully',
+            data
 
         })
 
@@ -173,7 +176,6 @@ export async function deletMealById(req, res) {
     try {
         const id = req.params.id
         const itemExists = await knex('meal').where('id', id).first()
-
         if (!id || !itemExists) {
             res.status(401).json({
                 success: false,
@@ -188,7 +190,7 @@ export async function deletMealById(req, res) {
         })
 
 
-    } catch {
+    } catch (error) {
         res.status(500).json({
             success: 'false',
             error: "Error Occured "

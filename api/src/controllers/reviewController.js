@@ -32,7 +32,6 @@ export async function getReviewsbyMealId(req, res) {
         })
 
     } catch (error) {
-        console.log(error)
 
         res.status(500).json({ success: false, error: 'Failed to fetch reviews' });
     }
