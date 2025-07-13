@@ -6,6 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Upload } from "lucide-react";
 import { useMealContext } from "@/context/mealContext";
+import Button from "@/components/ui/Button/Button";
 
 const initaialFormdata = {
   title: "",
@@ -190,9 +191,12 @@ export default function AddMeal() {
 
 
 
-        <button type="submit" disabled={isLoading} className={styles.submitBtn}>
-          {isEditMode ? isLoading ? "Updating A Meal..." : "Update" : isLoading ? "Adding A Meal..." : "Add a Meal"}
-        </button>
+        <Button type="submit" disabled={isLoading} className={styles.submitBtn}
+          variant={'Primary'}
+          fullWidth={true}
+          name={isEditMode ? isLoading ? "Updating A Meal..." : "Update" : isLoading ? "Adding A Meal..." : "Add a Meal"}
+        />
+
       </div>
     </form>
   </div>

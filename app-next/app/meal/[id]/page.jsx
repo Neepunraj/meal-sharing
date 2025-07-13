@@ -10,6 +10,7 @@ export async function generateStaticParams() {
     }));
 }
 
-export default async function MealDetailsPage({ params }) {
+export default async function MealDetailsPage(props) {
+    const params = await props.params
     return <MealDetail id={params.id} />;
 }

@@ -31,19 +31,6 @@
   cursor: pointer;
 }
 
-.button {
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-}
-.button:hover {
-  background-color: #1b3670;
-}
 .mealContainer {
   max-width: 700px;
   margin: 2rem auto;

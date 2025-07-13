@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import styles from "./MealList.module.css"
 import { useMealContext } from '@/context/mealContext'
+import Button from '../ui/Button/Button'
 const initialFormdata = {
     contact_number: "",
     contact_name: "",
@@ -23,6 +24,7 @@ export default function MealDetail({ id }) {
     const [isloading, setIsLoading] = useState(false)
     const [showReviewForm, setShowReviewForm] = useState(false)
     const { fetchMealbyId } = useMealContext()
+    const [showReserveForm, setShowReserveForm] = useState(false)
     const router = useRouter()
     const fetchReviewsByMealID = async () => {
         setIsLoading(true)
@@ -55,6 +57,7 @@ export default function MealDetail({ id }) {
 
 
     }, [id])
+    console.log(showReserveForm)
     if (isloading) return <div>isloading....</div>
     async function handleSubmitReserVation(event) {
         event.preventDefault()
@@ -169,7 +172,19 @@ export default function MealDetail({ id }) {
                     <p className={styles.label}>Published: {new Date(review.createdAt).toLocaleDateString()}</p>
                 </div>) : <p>No Reviews So Far</p>}
             </div>
-            <button className={styles.button} onClick={() => setShowReviewForm(!showReviewForm)}>Add Review</button>
+            <Button variant={'Primary'} name={'Add a Review'} onClick={() => {
+                setShowReviewForm(!showReviewForm)
+                if (showReserveForm) {
+                    setShowReserveForm(!showReserveForm)
+                }
+            }} />
+            <Button name={'Book a Table now'} onClick={() => {
+                setShowReserveForm(!showReserveForm)
+                if (showReviewForm) {
+                    setShowReviewForm(!showReviewForm)
+                }
+            }} />
+
             {/* tile,
             description,
             stars, */}    {
@@ -213,13 +228,12 @@ export default function MealDetail({ id }) {
                     </div>
 
 
-
-                    <button className={styles.button} type="submit">Add Review Now</button>
+                    <Button name={'Add Review Now'} variant={'Primary'} type='submit' />
                 </form>
 
             }
             {
-                mealbyId.max_reservations > 0 && <form className={styles.form} onSubmit={handleSubmitReserVation}>
+                showReserveForm && mealbyId.max_reservations > 0 && <form className={styles.form} onSubmit={handleSubmitReserVation}>
                     <div className={styles.formGroup}>
                         <label htmlFor="contact_number">Phone Number</label>
                         <input
@@ -268,8 +282,7 @@ export default function MealDetail({ id }) {
                             required
                         />
                     </div>
-
-                    <button className={styles.button} type="submit">Reserve Now</button>
+                    <Button name={'Reserve Now'} variant={'Primary'} type='submit' />
                 </form>
 
             }

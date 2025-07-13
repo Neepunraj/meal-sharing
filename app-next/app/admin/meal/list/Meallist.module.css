@@ -21,14 +21,7 @@
   width: 100%;
   justify-content: space-between;
 }
-.button {
-  background-color: rgb(98, 98, 149);
-  color: white;
-  height: 40px;
-  padding: 5px;
-  font-size: larger;
-  border-radius: 10px;
-}
+
 .actions {
   display: flex;
   gap: 5px;
@@ -52,12 +45,4 @@
   padding: 5px;
   align-items: center;
   text-align: center;
-}
-.submitBtn {
-  background-color: rgb(98, 98, 149);
-  color: white;
-  width: 100%;
-  padding: 5px;
-  font-size: larger;
-  border-radius: 10px;
 }

@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react'
 import styles from './Meallist.module.css'
 import { useRouter } from 'next/navigation'
 import { useMealContext } from '@/context/mealContext'
+import Button from '@/components/ui/Button/Button'
 export default function AdminMealListpage() {
     const router = useRouter()
     const { fetchMealsAdmin, meals, isLoading, deleteMeal } = useMealContext()
@@ -26,9 +27,8 @@ export default function AdminMealListpage() {
             <div>
                 <header className={styles.header}>
                     <h2>All Meals List</h2>
-                    <button onClick={() => router.push('/admin/meal/add')} className={styles.button} >
-                        Add a New Meal
-                    </button>
+                    <Button onClick={() => router.push('/admin/meal/add')} className={styles.button} name={'Add a New Meal'} variant={'Primary'} />
+
                 </header>
 
                 <div>
@@ -60,8 +60,8 @@ export default function AdminMealListpage() {
                                         <td>{meal.description}</td>
                                         <td>{new Date(meal.when).toDateString()}</td>
                                         <td className={styles.actions}>
-                                            <button onClick={() => router.push(`/admin/meal/add?id=${meal.id}`)} className={styles.submitBtn}>Edit</button>
-                                            <button onClick={() => handleDeleteMeal(meal.id)} className={styles.submitBtn} >Delete</button>
+                                            <Button onClick={() => router.push(`/admin/meal/add?id=${meal.id}`)} name={'Edit'} variant={'Primary'} />
+                                            <Button onClick={() => handleDeleteMeal(meal.id)} name={'Delete'} />
                                         </td>
 
 
