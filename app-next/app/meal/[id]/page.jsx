@@ -14,7 +14,7 @@ export async function generateStaticParams() {
         id: `${meal.id}-${slugify(meal.title)}`,
     }));
 }
-/* for now i have used id-slug will implement best practice later */
+/* for now i have used id-slug will implement best practice later  */
 export default async function MealDetailsPage(props) {
     const params = await props.params
     const [id] = params.id.split("-")
