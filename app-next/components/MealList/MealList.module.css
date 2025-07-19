@@ -11,6 +11,14 @@
 .redZone {
   color: red;
 }
+.img {
+  object-fit: cover;
+}
+.img:hover {
+  scale: 1.05;
+  overflow: hidden;
+  transition: 0.1s all;
+}
 .mealLists {
   display: flex;
   flex-wrap: wrap;

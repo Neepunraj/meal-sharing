@@ -9,6 +9,12 @@ export function MealContextProvider({ children }) {
     const [bannerImages, setBannerImages] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [error, setError] = useState(null)
+    const [currentPage, setCurrentPage] = useState(1)
+    const [totalPages, setTotalPages] = useState(1)
+    const [totalMeals, setTotalMeals] = useState(0)
+
+    /* search debounce  */
+
     const fetchMealsAdmin = async () => {
         setIsLoading(true)
         try {
@@ -35,6 +41,29 @@ export function MealContextProvider({ children }) {
             setIsLoading(false)
             setError(error)
 
+
+        }
+    }
+    const fetchMealForClient = async (params) => {
+        setIsLoading(true)
+        setError(null)
+        try {
+            const queryParams = {
+                ...params,
+            }
+            const response = await axios.get(`${API_ROUTES.MEAL}/getmeals`, {
+                params: queryParams,
+                withCredentials: true
+            })
+            setIsLoading(false)
+            setMeals(response.data.meals)
+            setCurrentPage(parseInt(response.data.page))
+            setTotalMeals(parseInt(response.data.totalMeals))
+            setTotalPages(parseInt(response.data.totalPages))
+
+        } catch (error) {
+            setIsLoading(false)
+            setError(error)
 
         }
     }
@@ -93,7 +122,7 @@ export function MealContextProvider({ children }) {
 
         }
     }
-    return < MealContext.Provider value={{ meals, setMeals, error, isLoading, fetchMealsAdmin, deleteMeal, fetchMealbyId, createMeal, updateMeal, bannerImages }
+    return < MealContext.Provider value={{ meals, setMeals, error, isLoading, fetchMealsAdmin, deleteMeal, fetchMealbyId, createMeal, updateMeal, bannerImages, totalMeals, totalPages, currentPage, fetchMealForClient, setCurrentPage }
     } >
         {children}
     </MealContext.Provider >

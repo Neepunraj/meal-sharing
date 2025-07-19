@@ -64,7 +64,7 @@ export async function createUser(req, res) {
 
 
     } catch (error) {
-        res.status(500).json({ success: false, error: 'error Occred' })
+        res.status(500).json({ success: false, error: error || 'error Occred' })
     }
 
 }
@@ -106,7 +106,7 @@ export const login = async (req, res) => {
     } catch (error) {
         res.status(500).json({
             success: false,
-            error: "Unable to Login ! Please try again Later",
+            error: error || "Unable to Login ! Please try again Later",
         });
     }
 };
@@ -114,7 +114,7 @@ export const login = async (req, res) => {
 export const logOut = async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
     if (refreshToken) {
-        await prisma.user.updateMany({
+        await knex.user.updateMany({
             where: { refreshToken },
             data: { refreshToken: null },
         });

@@ -11,8 +11,6 @@ export default function MealList() {
 
     useEffect(() => {
         fetchMealsAdmin()
-
-
     }, [])
     if (isLoading) return <div className={styles.container}>
         <p>Loading...</p>
@@ -28,7 +26,7 @@ export default function MealList() {
                     meals && meals.length > 0 ?
 
                         meals.map(meal =>
-                            <MealCard key={meal.id} handleClick={() => router.push(`/meal/${meal.id}`)} meal={meal} />
+                            <MealCard key={meal.id} handleClick={() => router.push(`/meal/${meal.id}-${meal.slug}`)} meal={meal} />
 
 
                         )

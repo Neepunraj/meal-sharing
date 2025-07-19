@@ -3,10 +3,12 @@
 import React, { useEffect, useRef } from 'react'
 import styles from './../meal/list/Meallist.module.css'
 import { useReservation } from '@/context/reservationContext'
+import { useMealContext } from '@/context/mealContext'
 export default function AdminReservationpage() {
     const { fetchllReservations, reservations, isLoading } = useReservation()
     useEffect(() => {
         fetchllReservations()
+
 
     }, [])
 
@@ -44,7 +46,7 @@ export default function AdminReservationpage() {
                                         <td>{reservation.contact_number}</td>
                                         <td>{new Date(reservation.createdAt).toLocaleDateString()}</td>
                                         <td>{reservation.no_of_guests}</td>
-                                        <td>{reservation.no_of_guests}</td>
+                                        <td>{reservation.meal_id}</td>
 
                                     </tr>)) : (
                                         <tr>

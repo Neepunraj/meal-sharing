@@ -6,11 +6,12 @@ export async function generateStaticParams() {
     });
     const data = await res.json();
     return data.meals.map((meal) => ({
-        id: meal.id.toString(),
+        id: (meal.id).toString(),
     }));
 }
-
+/* for now i have used id-slug will implement best practice later */
 export default async function MealDetailsPage(props) {
     const params = await props.params
-    return <MealDetail id={params.id} />;
+    const [id] = params.id.split("-")
+    return <MealDetail id={id} />;
 }

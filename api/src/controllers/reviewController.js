@@ -33,7 +33,7 @@ export async function getReviewsbyMealId(req, res) {
 
     } catch (error) {
 
-        res.status(500).json({ success: false, error: 'Failed to fetch reviews' });
+        res.status(500).json({ success: false, error: error || 'Failed to fetch reviews' });
     }
 }
 export async function addReview(req, res) {
@@ -70,7 +70,7 @@ export async function addReview(req, res) {
 
     } catch (error) {
 
-        res.status(500).json({ success: false, error: 'error Occred' })
+        res.status(500).json({ success: false, error: error || 'error Occred' })
     }
 
 }

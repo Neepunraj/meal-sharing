@@ -53,4 +53,20 @@ SELECT * from meal
 
 select * from reservations
 
+
 SELECT * from reviews
+
+ALTER TABLE meal ADD COLUMN slug VARCHAR(100);
+
+
+DESCRIBE reservations;
+
+ALTER TABLE reservations
+ADD COLUMN meal_id INT NOT NULL,
+ADD FOREIGN KEY (meal_id) REFERENCES meal(id) ON DELETE CASCADE;
+
+
+DESCRIBE meal
+
+ALTER TABLE reservations
+ADD COLUMN meal_id INT;

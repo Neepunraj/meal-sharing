@@ -3,11 +3,12 @@ import { useMealContext } from '@/context/mealContext'
 import React, { useEffect, useState } from 'react'
 
 import styles from "./BannerHome.module.css";
+import { useRouter } from 'next/navigation';
 
 export default function BannerHome() {
     const [currentSlide, setCurrentSlide] = useState(0)
-
-    const { meals, fetchMealsAdmin, bannerImages } = useMealContext()
+    const router = useRouter()
+    const { fetchMealsAdmin, bannerImages } = useMealContext()
     useEffect(() => {
         fetchMealsAdmin()
     }, [])
@@ -34,11 +35,11 @@ export default function BannerHome() {
                             <div className={styles.titleContainer}>
                                 <div className={styles.textBox}>
                                     <span>
-                                        Book Online Nw
+                                        Book Online Now
                                     </span>
                                     <h1 className={styles.largerText}>Your Hygge Resturant</h1>
                                     <p>A Cozy Hub Station</p>
-                                    <button className={styles.bookButton}>Reserve Now</button>
+                                    <button className={styles.bookButton} onClick={() => router.push('/meal')}> See Collections and Reserve a seat</button>
                                 </div>
                             </div>
 

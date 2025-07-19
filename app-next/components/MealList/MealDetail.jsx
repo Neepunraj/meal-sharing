@@ -5,6 +5,8 @@ import React, { useEffect, useState } from 'react'
 import styles from "./MealList.module.css"
 import { useMealContext } from '@/context/mealContext'
 import Button from '../ui/Button/Button'
+import StarRating from '../starRating/starRating'
+import { useReservation } from '@/context/reservationContext'
 const initialFormdata = {
     contact_number: "",
     contact_name: "",
@@ -24,6 +26,7 @@ export default function MealDetail({ id }) {
     const [isloading, setIsLoading] = useState(false)
     const [showReviewForm, setShowReviewForm] = useState(false)
     const { fetchMealbyId } = useMealContext()
+    const { addReservation, error } = useReservation()
     const [showReserveForm, setShowReserveForm] = useState(false)
     const router = useRouter()
     const fetchReviewsByMealID = async () => {
@@ -57,32 +60,18 @@ export default function MealDetail({ id }) {
 
 
     }, [id])
-    console.log(showReserveForm)
     if (isloading) return <div>isloading....</div>
+
     async function handleSubmitReserVation(event) {
         event.preventDefault()
-
-        const response = await fetch(`http://localhost:8000/api/addreservations`, {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json'
-            },
-            body: JSON.stringify({
-                ...formData,
-                meal_id: mealbyId.id
-
-            })
-
-        })
-        const result = await response.json()
-        if (result.success) {
-            alert(`${result.message}`)
+        const success = await addReservation(formData.contact_email, formData.contact_name, formData.contact_number, formData.no_of_guests, id)
+        console.log(success)
+        if (success) {
+            alert("Reservation Done")
             setFormData(initialFormdata)
         } else {
-            alert(`${result.error} Please tray again`)
-
+            alert("Unable to reserve seat")
         }
-
     }
     async function handleSubmitReview(event) {
         event.preventDefault()
@@ -118,6 +107,10 @@ export default function MealDetail({ id }) {
             ...prev,
             [event.target.name]: event.target.value
         }))
+    }
+    function handleRatingChange(value) {
+        setReviewForm(prev => ({ ...prev, stars: value }))
+
     }
     return (
         <div className={styles.mealContainer}>
@@ -214,17 +207,9 @@ export default function MealDetail({ id }) {
                     </div>
 
                     <div className={styles.formGroup}>
-                        <label htmlFor="contact_email">Star</label>
-                        <input
-                            id="stars"
-                            name="stars"
-                            type="number"
-                            min={0}
-                            max={5}
-                            value={reviewForm.stars}
-                            onChange={handleReviewFormChange}
-                            required
-                        />
+                        <label htmlFor="contact_email">Meal Ratings</label>
+                        <StarRating onRate={handleRatingChange} />
+
                     </div>
 
 
