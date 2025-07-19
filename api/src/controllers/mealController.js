@@ -132,7 +132,7 @@ export async function addMeals(req, res) {
         await knex('meal').insert({
             title, description,
             location, when, max_reservations, price,
-            createdAt: fn.now(), imgUrl: imgSrcs, slug: slugify(title)
+            createdAt: knex.fn.now(), imgUrl: imgSrcs, slug: slugify(title)
         })
         res.status(200).json({
             success: true,
