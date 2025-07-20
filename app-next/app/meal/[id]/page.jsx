@@ -1,4 +1,5 @@
 import MealDetail from "@/components/MealList/MealDetail";
+import { API_BASE_URL, API_ROUTES } from "@/utils/api";
 import axios from "axios";
 function slugify(title) {
     return title
@@ -8,10 +9,11 @@ function slugify(title) {
         .replace(/--+/g, "-");
 }
 export async function generateStaticParams() {
-    const res = await axios.get('http://localhost:8000/api/meals/allmeals');
+    const res = await axios.get(`${API_ROUTES.MEAL}/allmeals`);
     const meals = res.data.meals
     return meals.map((meal) => ({
-        id: `${meal.id}-${slugify(meal.title)}`,
+        id: `${meal.id} - ${slugify(meal.title)
+            } `,
     }));
 }
 /* for now i have used id-slug will implement best practice later  */
