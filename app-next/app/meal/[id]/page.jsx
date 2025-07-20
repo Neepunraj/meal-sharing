@@ -9,12 +9,15 @@ function slugify(title) {
         .replace(/--+/g, "-");
 }
 export async function generateStaticParams() {
-    const res = await axios.get(`${API_ROUTES.MEAL}/allmeals`);
-    const meals = res.data.meals
-    return meals.map((meal) => ({
-        id: `${meal.id} - ${slugify(meal.title)
-            } `,
-    }));
+    try {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/api/meals/allmeals`)
+        return res.data.meals.map(meal => ({
+            id: `${meal.id}-${meal.slug}`,
+        }))
+    } catch (error) {
+        console.warn("⚠️ Backend unavailable during build, using empty path.")
+        return []
+    }
 }
 /* for now i have used id-slug will implement best practice later  */
 export default async function MealDetailsPage(props) {
