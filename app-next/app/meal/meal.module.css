@@ -1,0 +1,64 @@
+.filterSection {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+}
+.searchInput {
+  padding: 8px;
+  border: 1px solid black;
+  border-radius: 10px;
+  flex: 1;
+  min-width: 200px;
+}
+.select {
+  padding: 5px;
+  border-radius: 10px;
+  height: 35px;
+}
+.mealList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 10px;
+  justify-content: center;
+}
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  margin-top: 10px;
+  margin-bottom: 15px;
+}
+.button {
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-weight: 500;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.button:hover {
+  background-color: #848484;
+  color: #000;
+}
+
+.activeBtn {
+  background-color: #4f46e5; /* Indigo 600 */
+  color: #ffffff;
+  box-shadow: 0 0 6px rgba(79, 70, 229, 0.5);
+}
+
+.inactiveBtn {
+  background-color: #e5e7eb; /* Gray-200 */
+  color: #7f7f7f;
+  opacity: 0.7;
+}

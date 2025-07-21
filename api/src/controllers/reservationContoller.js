@@ -15,7 +15,7 @@ export async function getallReservation(req, res) {
     } else {
         res.status(200).json({
             success: 'true',
-            reservation: reservations
+            reservations: reservations
         })
     }
 
@@ -24,11 +24,13 @@ export async function getallReservation(req, res) {
 export async function addReservations(req, res) {
 
     try {
-        const { no_of_guests,
-            contact_number,
-            contact_name,
+        const {
             contact_email,
-            meal_id } = req.body
+            contact_name,
+            contact_number,
+            no_of_guests,
+            meal_id,
+        } = req.body
 
 
         const meal = await knex('meal').where({ id: meal_id }).first()
@@ -51,12 +53,12 @@ export async function addReservations(req, res) {
         }
 
         await knex('reservations').insert({
-            no_of_guests,
-            contact_number,
-            contact_name,
             contact_email,
+            contact_name,
+            contact_number,
             createdAt: knex.fn.now(),
-            meal_id
+            meal_id,
+            no_of_guests,
         })
         /* also need to decreace reservation spot in meals */
         await knex('meal').where({ id: meal_id }).update({
@@ -69,7 +71,8 @@ export async function addReservations(req, res) {
 
 
     } catch (error) {
-        res.status(500).json({ success: false, error: 'error Occred' })
+        console.log(error)
+        res.status(500).json({ success: false, error: error || 'error Occred' })
     }
 
 }
@@ -97,7 +100,7 @@ export async function updateReservation(req, res) {
         const id = req.params.id
         if (!id) {
             res.status(401).json({
-                success: fasle,
+                success: false,
                 error: 'Id is required'
             })
             return
@@ -131,7 +134,7 @@ export async function updateReservation(req, res) {
         })
 
     } catch (error) {
-        res.status(400).json({ success: false, error: 'error Occred' })
+        res.status(400).json({ success: false, error: error || 'error Occred' })
     }
 
 }

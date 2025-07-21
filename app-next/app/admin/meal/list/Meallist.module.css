@@ -1,0 +1,48 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  align-items: center;
+  margin: 0 auto;
+  width: 80vw;
+}
+.imageBanner {
+  height: 80px;
+  width: 100px;
+  overflow: hidden;
+  object-fit: cover;
+}
+.imageContainer {
+  height: 80px;
+  width: 100px;
+}
+.header {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.actions {
+  display: flex;
+  gap: 5px;
+}
+.table {
+  border-collapse: collapse;
+  margin-top: 5px;
+}
+.trow {
+  align-items: center;
+  border-bottom: 1px dotted black;
+}
+.endText {
+  text-align: right;
+}
+.tableHead {
+  width: 1200px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+  padding: 5px;
+  align-items: center;
+  text-align: center;
+}
