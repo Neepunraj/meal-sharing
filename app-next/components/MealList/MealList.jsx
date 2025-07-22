@@ -4,6 +4,7 @@ import styles from "./MealList.module.css"
 import { useRouter } from 'next/navigation'
 import MealCard from './MealCard'
 import { useMealContext } from '@/context/mealContext'
+import sampleMeals from '@/data/sampleMeals'
 export default function MealList() {
 
     const { fetchMealsAdmin, isLoading, error, meals } = useMealContext()
@@ -31,7 +32,10 @@ export default function MealList() {
 
                         )
 
-                        : <div className={styles.container}><p>No meals found</p></div>
+                        : sampleMeals.map(meal =>
+                            <MealCard key={meal.id} handleClick={() => router.push(`/meal/${meal.id}-${meal.slug}`)} meal={meal} />
+
+                        )
                 }
 
 
