@@ -33,6 +33,9 @@
   width: 80px;
   height: 80px;
   overflow: hidden;
+  padding: 5px;
+}
+.previewImage {
   object-fit: cover;
 }
 .fields {

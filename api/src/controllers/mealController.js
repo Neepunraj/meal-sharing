@@ -1,6 +1,7 @@
 
 import cloudinary from '../config/cloudinary.js'
 import knex from '../database_client.js'
+import fs from "fs";
 
 /* slugify */
 const slugify = (text, maxLength = 70) => {
@@ -134,6 +135,7 @@ export async function addMeals(req, res) {
             location, when, max_reservations, price,
             createdAt: knex.fn.now(), imgUrl: imgSrcs, slug: slugify(title)
         })
+        files.forEach(file => fs.unlinkSync(file.path))
         res.status(200).json({
             success: true,
             message: 'meal added successfully'

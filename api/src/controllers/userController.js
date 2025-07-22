@@ -64,6 +64,7 @@ export async function createUser(req, res) {
 
 
     } catch (error) {
+        console.log(error)
         res.status(500).json({ success: false, error: error || 'error Occred' })
     }
 
