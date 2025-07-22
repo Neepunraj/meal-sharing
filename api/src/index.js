@@ -6,10 +6,12 @@ import { mealRouter } from './routers/meals.js';
 import { reservationsRouter } from './routers/reservations.js';
 import { reviewRouter } from './routers/reviews.js';
 import { userRouter } from './routers/userRoutes.js';
+import job from './config/cron.js';
 
 dotenv.config()
 const app = express();
 app.use(bodyParser.json());
+if (process.env.NODE_ENV === "production") job.start();
 const allowedOrigins = ['http://localhost:3000'];
 
 app.use(cors({
