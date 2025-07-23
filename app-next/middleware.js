@@ -60,7 +60,7 @@ export async function middleware(request) {
 
             // Try to refresh token
             const refreshResponse = await fetch(
-                "https://localhost:8000/api/auth/refresh-token",
+                `${process.env.NEXT_PUBLIC_API_URL_BASE}/api/auth/refresh-token`,
                 {
                     method: "POST",
                     credentials: "include",
