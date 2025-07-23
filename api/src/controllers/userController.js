@@ -29,14 +29,12 @@ async function setToken(
         sameSite: "none",
         secure: true,
         maxAge: 60 * 60 * 1000,
-        domain: "localhost",
     });
     res.cookie("refreshToken", refreshToken, {
         httpOnly: true,
         sameSite: "none",
         secure: true,
         maxAge: 7 * 60 * 60 * 1000,
-        domain: "localhost",
     });
 }
 
