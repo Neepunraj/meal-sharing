@@ -12,7 +12,7 @@ dotenv.config()
 const app = express();
 app.use(bodyParser.json());
 if (process.env.NODE_ENV === "production") job.start();
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = ['http://localhost:3000', 'https://meal-sharing-frontend-2kd3.onrender.com/'];
 
 app.use(cors({
   origin: function (origin, callback) {
