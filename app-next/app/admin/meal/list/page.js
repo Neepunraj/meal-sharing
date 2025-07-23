@@ -5,14 +5,20 @@ import styles from './Meallist.module.css'
 import { useRouter } from 'next/navigation'
 import { useMealContext } from '@/context/mealContext'
 import Button from '@/components/ui/Button/Button'
+import Image from 'next/image'
 export default function AdminMealListpage() {
     const router = useRouter()
     const { fetchMealsAdmin, meals, isLoading, deleteMeal } = useMealContext()
+
+    const hasFetched = useRef(false)
     useEffect(() => {
+        if (!hasFetched.current) {
 
-        fetchMealsAdmin()
+            fetchMealsAdmin()
+            hasFetched.current = true
+        }
 
-    }, [])
+    }, [fetchMealsAdmin])
     const handleDeleteMeal = async (id) => {
         const result = await deleteMeal(id)
         if (result) {
@@ -48,7 +54,7 @@ export default function AdminMealListpage() {
                                 {
                                     meals && meals.length && meals.length > 0 ? meals.map(meal => (<tr key={meal.id} className={styles.tableHead}>
                                         <td className={styles.imageContainer}>
-                                            <img src={meal.imgUrl} className={styles.imageBanner} />
+                                            <Image src={meal.imgUrl} className={styles.imageBanner} fill alt={meal.title} />
                                         </td>
                                         <td>{meal.title}
                                             <br />

@@ -1,16 +1,23 @@
 "use client"
 import { useMealContext } from '@/context/mealContext'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 import styles from "./BannerHome.module.css";
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 export default function BannerHome() {
     const [currentSlide, setCurrentSlide] = useState(0)
     const router = useRouter()
     const { fetchMealsAdmin, bannerImages } = useMealContext()
+    const mealadminRef = useRef(false)
     useEffect(() => {
-        fetchMealsAdmin()
+        if (!mealadminRef.current) {
+            fetchMealsAdmin()
+            mealadminRef.current = true
+        }
+
+
     }, [])
     useEffect(() => {
         if (bannerImages.length > 0) {
@@ -29,7 +36,7 @@ export default function BannerHome() {
                     bannerImages && bannerImages.length > 0 && bannerImages.map((banner, index) =>
                         <div key={index} className={`${styles.imgDisplay} ${currentSlide === index ? styles.activeImg : styles.inactiveImg}`}>
                             <div className={styles.absolutediv}>
-                                <img src={banner} alt={`Banner ${index + 1}`} className={styles.imageBanner} />
+                                <Image src={banner} alt={`Banner ${index + 1}`} fill className={styles.imageBanner} />
                             </div>
                             <div className={styles.blackOpacity} />
                             <div className={styles.titleContainer}>

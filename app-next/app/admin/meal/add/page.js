@@ -1,12 +1,12 @@
 
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from './Addmeal.module.css'
 import { useRouter, useSearchParams } from "next/navigation";
-import Image from "next/image";
 import { Upload } from "lucide-react";
 import { useMealContext } from "@/context/mealContext";
 import Button from "@/components/ui/Button/Button";
+import Image from "next/image";
 
 const initaialFormdata = {
   title: "",
@@ -28,7 +28,7 @@ export default function AddMeal() {
   const getCurrentEditID = searchParams.get("id");
   const isEditMode = !!getCurrentEditID;
   const { fetchMealbyId, isLoading, createMeal, updateMeal } = useMealContext()
-
+  const hasfetchedbyId = useRef(false)
   const handleFileChange = (event) => {
     if (event.target.files) {
       setSelectedfiles(Array.from(event.target.files))
@@ -64,21 +64,25 @@ export default function AddMeal() {
 
 
   useEffect(() => {
-    if (isEditMode) {
-      fetchMealbyId(getCurrentEditID).then(meal => {
-        if (meal) {
-          setFormState({
-            title: meal.title,
-            description: meal.description,
-            location: meal.location,
-            when: formatDate(meal.when),
-            price: meal.price,
-            max_reservations: meal.max_reservations,
-          })
-        }
-      })
+    if (!hasfetchedbyId.current) {
+      if (isEditMode) {
+        fetchMealbyId(getCurrentEditID).then(meal => {
+          if (meal) {
+            setFormState({
+              title: meal.title,
+              description: meal.description,
+              location: meal.location,
+              when: formatDate(meal.when),
+              price: meal.price,
+              max_reservations: meal.max_reservations,
+            })
+          }
+        })
+      }
+      hasfetchedbyId.current = true
     }
-  }, [])
+  }, [isEditMode, fetchMealbyId, getCurrentEditID])
+
   const formatDate = (date) => {
     return new Date(date).toISOString().split('T')[0]
   }
@@ -111,7 +115,7 @@ export default function AddMeal() {
             <div className={styles.previewContainer}>
               {selectedfiles.map((file, index) => (
                 <div key={index} className={styles.previewImageWrapper}>
-                  <img
+                  <Image
                     alt={`Preview ${index + 1}`}
                     src={URL.createObjectURL(file)}
                     width={80}

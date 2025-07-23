@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useReducer, useState } from 'react'
+import React, { useEffect, useReducer, useRef, useState } from 'react'
 import styles from "./MealList.module.css"
 import { useRouter } from 'next/navigation'
 import MealCard from './MealCard'
@@ -9,10 +9,13 @@ export default function MealList() {
 
     const { fetchMealsAdmin, isLoading, error, meals } = useMealContext()
     const router = useRouter()
-
+    const fetchmealAdminRef = useRef(false)
     useEffect(() => {
-        fetchMealsAdmin()
-    }, [])
+        if (!fetchmealAdminRef.current) {
+            fetchMealsAdmin()
+            fetchmealAdminRef.current = true
+        }
+    }, [fetchmealAdminRef])
     if (isLoading) return <div className={styles.container}>
         <p>Loading...</p>
     </div>

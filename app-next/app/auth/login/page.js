@@ -54,7 +54,7 @@ export default function LoginPage() {
                                 value={formdata.password} name='password' placeholder='Please Entnter password' onChange={handleChange} />
                         </div>
                         <Button type='submit' variant={'Primary'} name={isLoading ? "Logging" : "Login"} fullWidth />
-                        <p>Don't have a account {" "}
+                        <p>{`Don't have a account`} {" "}
                             <Link href={'/auth/signup'}>Sign Up</Link>
                         </p>
                     </form>

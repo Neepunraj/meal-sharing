@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from "./BannerHome.module.css"
+import Image from 'next/image'
 
 
 export default function FeatureBanner() {
@@ -7,7 +8,7 @@ export default function FeatureBanner() {
         <section className={styles.relativeSection}>
             <div className={`${styles.imgDisplay} ${styles.activeImg}`}>
                 <div className={styles.absolutediv}>
-                    <img src={'https://res.cloudinary.com/dtm7wbzin/image/upload/v1752348159/mealphoto/szkdq0tqsf7kxzenatme.webp'} alt={`Banner raya`} className={styles.imageBanner} />
+                    <Image src={'https://res.cloudinary.com/dtm7wbzin/image/upload/v1752348159/mealphoto/szkdq0tqsf7kxzenatme.webp'} alt={`Banner raya`} className={styles.imageBanner} />
                 </div>
                 <div className={styles.blackOpacity} />
                 <div className={styles.titleContainer}>

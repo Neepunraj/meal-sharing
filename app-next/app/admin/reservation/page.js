@@ -6,11 +6,16 @@ import { useReservation } from '@/context/reservationContext'
 import { useMealContext } from '@/context/mealContext'
 export default function AdminReservationpage() {
     const { fetchllReservations, reservations, isLoading } = useReservation()
+    const reservationRef = useRef(false)
     useEffect(() => {
-        fetchllReservations()
+        if (!reservationRef.current) {
+
+            fetchllReservations()
+            reservationRef.current = true
+        }
 
 
-    }, [])
+    }, [fetchllReservations])
 
     if (isLoading) return <div>Loading....</div>
     return (

@@ -1,6 +1,6 @@
 "use client"
 import FeatureBanner from '@/components/HomePage/FeatureBanner'
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import styles from "./meal.module.css"
 import { useMealContext } from '@/context/mealContext'
 import MealCard from '@/components/MealList/MealCard'
@@ -17,7 +17,7 @@ export default function MealsPage() {
     const router = useRouter()
     const { meals, currentPage, totalPages, setCurrentPage, fetchMealForClient, isLoading, error,
     } = useMealContext()
-
+    const fetchMealforClinetRef = useRef(false)
     const debounceSearch = useMemo(() =>
         debounce(value => {
             setDebouncedSearch(value)
@@ -35,14 +35,17 @@ export default function MealsPage() {
     }
 
     useEffect(() => {
-        fetchMealForClient({
-            page: currentPage,
-            sortKey,
-            sortDir,
-            limit: 4,
-            title: debouncedSearch
-        });
-    }, [debouncedSearch, currentPage, sortKey, sortDir]);
+        if (!fetchMealforClinetRef.current) {
+            fetchMealForClient({
+                page: currentPage,
+                sortKey,
+                sortDir,
+                limit: 4,
+                title: debouncedSearch
+            });
+            fetchMealforClinetRef.current = true
+        }
+    }, [debouncedSearch, currentPage, sortKey, sortDir, fetchMealForClient]);
     /* prevents too many loadings */
     useEffect(() => {
         const timer = setTimeout(() => setShowLoading(isLoading), 200);

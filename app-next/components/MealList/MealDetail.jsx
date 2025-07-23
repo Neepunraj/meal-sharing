@@ -1,12 +1,13 @@
 "use client"
 /* homeworks this week july 2 */
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styles from "./MealList.module.css"
 import { useMealContext } from '@/context/mealContext'
 import Button from '../ui/Button/Button'
 import StarRating from '../starRating/starRating'
 import { useReservation } from '@/context/reservationContext'
+import Image from 'next/image'
 const initialFormdata = {
     contact_number: "",
     contact_name: "",
@@ -29,20 +30,20 @@ export default function MealDetail({ id }) {
     const { addReservation, error } = useReservation()
     const [showReserveForm, setShowReserveForm] = useState(false)
     const router = useRouter()
-    const fetchReviewsByMealID = async () => {
-        setIsLoading(true)
+    const fetchReviewsByMealID = useCallback(async () => {
+        setIsLoading(true);
         try {
-            const response = await fetch(`http://localhost:8000/api/review/${id}`)
-            const data = await response.json()
-            setReviews(data.reviews)
-            setIsLoading(false)
-
+            const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL_BASE}/api/review/${id}`);
+            const data = await response.json();
+            setReviews(data.reviews);
         } catch (error) {
-            console.log(error)/* for testing only error will be ahdnled later*/
-            setIsLoading(false)
+            console.log(error); // handle error appropriately
+        } finally {
+            setIsLoading(false);
         }
+    }, [id]);
 
-    }
+
     useEffect(() => {
 
 
@@ -55,12 +56,13 @@ export default function MealDetail({ id }) {
             }
 
         }
-        fetchProduct()
-        fetchReviewsByMealID()
+        fetchProduct();
+        fetchReviewsByMealID();
 
 
-    }, [id])
+    }, []);
     if (isloading) return <div>isloading....</div>
+
 
     async function handleSubmitReserVation(event) {
         event.preventDefault()
@@ -75,7 +77,7 @@ export default function MealDetail({ id }) {
     }
     async function handleSubmitReview(event) {
         event.preventDefault()
-        const response = await fetch('http://localhost:8000/api/addreview', {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL_BASE}/api/addreview`, {
             method: "POST",
             headers: {
                 'content-type': 'application/json'
@@ -118,7 +120,7 @@ export default function MealDetail({ id }) {
                 {mealbyId.title}
             </h1>
             <div className={styles.imgWrapper}>
-                <img src={mealbyId.imgUrl} alt={mealbyId.title} className={styles.images} />
+                <Image src={mealbyId.imgUrl} alt={mealbyId.title} className={styles.images} />
             </div>
             <p className={styles.MealDescription}>
                 {mealbyId.description}
