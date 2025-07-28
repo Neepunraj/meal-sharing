@@ -1,0 +1,25 @@
+.button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  color: white;
+  margin-left: 5px;
+}
+.fullWidth {
+  width: 100%;
+}
+.primary {
+  background-color: #2563eb;
+}
+.primary:hover {
+  background-color: #1b3670;
+}
+.darkBtn {
+  background-color: #000000;
+}
+.darkBtn:hover {
+  background-color: hsl(0, 87%, 48%);
+}
