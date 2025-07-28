@@ -54,7 +54,7 @@ export default function AdminMealListpage() {
                                 {
                                     meals && meals.length && meals.length > 0 ? meals.map(meal => (<tr key={meal.id} className={styles.tableHead}>
                                         <td className={styles.imageContainer}>
-                                            <Image src={meal.imgUrl} className={styles.imageBanner} fill alt={meal.title} />
+                                            <Image src={meal.imgUrl} className={styles.imageBanner} height={80} width={80} objectFit='cover' alt={meal.title} />
                                         </td>
                                         <td>{meal.title}
                                             <br />

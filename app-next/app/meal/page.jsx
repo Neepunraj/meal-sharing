@@ -35,17 +35,16 @@ export default function MealsPage() {
     }
 
     useEffect(() => {
-        if (!fetchMealforClinetRef.current) {
-            fetchMealForClient({
-                page: currentPage,
-                sortKey,
-                sortDir,
-                limit: 4,
-                title: debouncedSearch
-            });
-            fetchMealforClinetRef.current = true
-        }
-    }, [debouncedSearch, currentPage, sortKey, sortDir, fetchMealForClient]);
+
+        fetchMealForClient({
+            page: currentPage,
+            sortKey,
+            sortDir,
+            limit: 4,
+            title: debouncedSearch
+        });
+
+    }, [debouncedSearch, currentPage, sortKey, sortDir]);
     /* prevents too many loadings */
     useEffect(() => {
         const timer = setTimeout(() => setShowLoading(isLoading), 200);
